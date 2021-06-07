@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prueba tecnica</title>
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+</head>
+
+<body>
+    <div class="principal-container container masthead-followup px-md-4">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col" class="name-column">Name</th>
+                    <th scope="col" class="color-column">Color</th>
+                    <th scope="col" class="event-1-column">Event 1</th>
+                    <th scope="col" class="event-2-column">Event 2</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Here You need the dinamic content -->
+            </tbody>
+        </table>
+
+        <p>Please enter the colors in english</p>
+
+        <div class="input-group input-group-sm mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="inputGroup-sizing-sm">Name</span>
+            </div>
+            <input type="text" id="name-input" class="form-control" aria-label="Small"
+                aria-describedby="inputGroup-sizing-sm">
+        </div>
+        <div class="input-group input-group-sm mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="inputGroup-sizing-sm">Color</span>
+            </div>
+            <input type="text" id="color-input" class="form-control" aria-label="Small"
+                aria-describedby="inputGroup-sizing-sm">
+        </div>
+
+        <button id="success-form" type="button" class="btn btn-success">Success</button>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- Functions -->
+    <script>
+        $(document).ready(function () {
+            successForm();
+        });
+
+        function successForm() {
+            var cont = 0;
+            // When press successfully turn on add item dynamically
+            $(".principal-container #success-form").click(function () {
+
+                cont = cont + 1;
+                
+                $(".principal-container table tbody").append(
+                    '<tr>'
+                    + '<th scope="col" class="name-column-'+cont+'">' + $("input#name-input").val() + '</th>'
+                    + '<th scope="col" class="color-column-'+cont+'">' + $("input#color-input").val() + '</th>'
+                    + '<th scope="col" class="event-1-column">'
+                    + '<button type="button" id="mayus-button-'+cont+'" class="btn btn-primary">Mayus</button>'
+                    + '</th>'
+                    + '<th scope="col" class="event-2-column">'
+                    + '<button type="button" id="coloring-button-'+cont+'" class="btn btn-danger">Coloring This Row</button>'
+                    + '</th>'
+                    + '</tr>');
+
+                // Clean inputs
+                $("input#name-input").val(" ");
+                $("input#color-input").val(" ");
+
+                for (let index = 1; index <= cont; index++) {
+                    // When press Mayus adds Uppercase
+                    $("#mayus-button-"+index+"").click(function () {
+                        if ($("th.name-column-"+index+"").css("text-transform") != "uppercase") {
+                            $("th.name-column-"+index+"").css("text-transform", "uppercase");
+                            $("th.color-column-"+index+"").css("text-transform", "uppercase");
+                        }
+                        else {
+                            $("th.name-column-"+index+"").css("text-transform", "inherit");
+                            $("th.color-column-"+index+"").css("text-transform", "inherit");
+                        }
+                    });
+
+                    // When press Coloring This Rows adds color
+                    $("#coloring-button-"+index+"").click(function () {
+                        $("body").css("background-color", $("th.color-column-"+index).text());
+                    });
+                }
+            });
+
+            // // When press Mayus adds Uppercase
+            // $("#mayus-button").click(function () {
+            //     if ($(this).parent().prev().prev().css("text-transform") != "uppercase") {
+            //         $(this).parent().prev().prev().css("text-transform", "uppercase");
+            //         $(this).parent().prev().css("text-transform", "uppercase");
+            //     }
+            //     else {
+            //         $(this).parent().prev().prev().css("text-transform", "inherit");
+            //         $(this).parent().prev().css("text-transform", "inherit");
+            //     }
+            // });
+
+            // // When press Coloring This Rows adds color
+            // $("#coloring-button").click(function () {
+            //     console.log($(this).parent().prev().prev().text());
+            //     $("body").css("background-color", $(this).parent().prev().prev().text());
+            // });
+        }
+    </script>
+</body>
+
+</html>
